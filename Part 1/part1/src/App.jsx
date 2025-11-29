@@ -24,39 +24,42 @@ const Total = () => {
   )
 }
 
+const Content = (props) => {
+    const parts=props.parts
+    return(
+      <>
+        {parts.map(part => <Part key={part.id} part={part.name} exercises={part.exercises}/>)}
+      
+      </>
+      
+    )
+    
+
+}
 
 
 
 
 const App = () => {
   const course = 'Half Stack application development'
-  const part1 = {
+  const parts = [{
     name: 'Fundamentals of React',
     exercises: 10
-  }
-  const part2 = {
+  },
+  {
     name: 'Using props to pass data',
     exercises: 7
-  }
-  const part3 = {
+  },
+  {
     name: 'State of a component',
     exercises: 14
-  }
+  }]
 
-  const Content = () => {
-    return(
-      <>
-        <Part part={part1.name} exercises={part1['exercises']}/>
-        <Part part={part2.name} exercises={part2['exercises']}/>
-        <Part part={part3.name} exercises={part3['exercises']}/>
-      </>
-    )
-  }
 
   return (
     <>
       <Header course={course}/>
-      <Content/>
+      <Content parts={parts}/>
       <Total/>
     </>
   )
