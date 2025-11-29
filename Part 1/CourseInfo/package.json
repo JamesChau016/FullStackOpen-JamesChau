@@ -2,6 +2,9 @@
   "name": "part1",
   "private": true,
   "version": "0.0.0",
+  "workspaces":[
+    "Part 1/*"
+  ],
   "type": "module",
   "scripts": {
     "dev": "vite",
