@@ -18,10 +18,7 @@ const Total = (props) => <p><strong>total of {props.total} exercises</strong></p
 
 const Course = (props) =>{
     const course=props.course
-    let total=0
-    course.parts.forEach(part =>{
-        total+=part.exercises
-    })
+    const total = course.parts.reduce((s,p)=>s+p.exercises,0) 
     return (
         <div>
           <Header course={course.name} />
