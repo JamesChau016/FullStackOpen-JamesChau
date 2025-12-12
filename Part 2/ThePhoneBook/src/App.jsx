@@ -3,13 +3,13 @@ import Filter from './components/filter'
 import Form from './components/form'
 import Person from './components/person'
 import axios from 'axios'
+import services from './services/persons'
 
 const App = () => {
   const [persons, setPersons] = useState([])
 
   useEffect(()=>{
-    axios
-    .get("http://localhost:3001/persons")
+    services.getAll()
     .then(r=>setPersons(r.data))
     console.log('Completed fetching data')
   },[])
