@@ -1,4 +1,5 @@
-import {useState} from 'react'
+import {useState,useEffect} from 'react'
+import axios from 'axios'
 
 const Form = ({persons, setPersons}) =>{
 
@@ -12,7 +13,11 @@ const Form = ({persons, setPersons}) =>{
           window.alert(`${newName} is already added to the phonebook`)
         }
         else{
-          setPersons(p => p.concat(obj))
+            axios.post("http://localhost:3001/persons",obj)
+            .then(()=>{
+                setPersons(p => p.concat(obj))
+                console.log('completed adding')
+            })
         }
       }
     

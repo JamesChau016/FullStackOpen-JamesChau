@@ -8,7 +8,8 @@ const App = () => {
   const [persons, setPersons] = useState([])
 
   useEffect(()=>{
-    axios.get("http://localhost:3001/persons")
+    axios
+    .get("http://localhost:3001/persons")
     .then(r=>setPersons(r.data))
     console.log('Completed fetching data')
   },[])
