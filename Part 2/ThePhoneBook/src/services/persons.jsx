@@ -12,5 +12,9 @@ const add = (obj)=>{
     return axios.post(url,obj)
 }
 
+const deleteP = (id) =>{
+    return axios.delete(`${url}/${id}`)
+}
 
-export default {getAll, add}
+
+export default {getAll, add, deleteP}

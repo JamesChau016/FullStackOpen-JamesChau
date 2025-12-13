@@ -11,7 +11,6 @@ const App = () => {
   useEffect(()=>{
     services.getAll()
     .then(r=>setPersons(r.data))
-    console.log('Completed fetching data')
   },[])
   
 
@@ -27,7 +26,7 @@ const App = () => {
 
       <h3>Numbers</h3>
       
-      <Person persons={persons}/>
+      <Person persons={persons} setPersons={setPersons}/>
     </div>
   )
 }

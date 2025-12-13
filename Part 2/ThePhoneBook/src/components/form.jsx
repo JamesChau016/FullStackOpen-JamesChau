@@ -10,13 +10,16 @@ const Form = ({persons, setPersons}) =>{
     const addName = (e) =>{
         const obj={name:newName, number: newNum}
         e.preventDefault()
-        if (persons.find(o=>o.name===newName)){
+        if ((persons.find(o=>o.name===newName))){
           window.alert(`${newName} is already added to the phonebook`)
+        }
+        else if ((newName==='')||(newNum==='')){
+            window.alert('Please enter all values')
         }
         else{
             services.add(obj)
-            .then(()=>{
-                setPersons(p => p.concat(obj))
+            .then(response=>{
+                setPersons(p => p.concat(response.data))
                 console.log('completed adding')
             })
         }
