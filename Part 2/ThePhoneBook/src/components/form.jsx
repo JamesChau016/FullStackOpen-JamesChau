@@ -2,7 +2,7 @@ import {useState,useEffect} from 'react'
 import axios from 'axios'
 import services from '../services/persons'
 
-const Form = ({persons, setPersons, setNoti}) =>{
+const Form = ({persons, setPersons, setNoti, setErr}) =>{
 
     const [newName, setNewName] = useState('')
     const [newNum, setNewNum] = useState('')
@@ -20,6 +20,12 @@ const Form = ({persons, setPersons, setNoti}) =>{
                 setNoti(`${newPer.name}'s number changed`)
                 setTimeout(() => {
                     setNoti(null)
+                }, 5000)
+            })
+            .catch(error =>{
+                setErr(`Information of ${newPer.name} has already been removed from the server`)
+                setTimeout(() => {
+                    setErr(null)
                 }, 5000)
             })
           }
