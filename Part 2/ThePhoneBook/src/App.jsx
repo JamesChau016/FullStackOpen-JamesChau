@@ -2,11 +2,13 @@ import { useState,useEffect } from 'react'
 import Filter from './components/filter'
 import Form from './components/form'
 import Person from './components/person'
+import Notification from './components/noti'
 import axios from 'axios'
 import services from './services/persons'
 
 const App = () => {
   const [persons, setPersons] = useState([])
+  const [noti, setNoti] = useState(null)
 
   useEffect(()=>{
     services.getAll()
@@ -17,12 +19,12 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-
+      <Notification message={noti}/>
       <Filter setPersons={setPersons}/>
 
       <h3>add a new</h3>
 
-      <Form persons={persons} setPersons={setPersons}/>
+      <Form persons={persons} setPersons={setPersons} setNoti={setNoti}/>
 
       <h3>Numbers</h3>
       

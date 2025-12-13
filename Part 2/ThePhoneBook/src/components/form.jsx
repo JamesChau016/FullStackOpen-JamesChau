@@ -2,7 +2,7 @@ import {useState,useEffect} from 'react'
 import axios from 'axios'
 import services from '../services/persons'
 
-const Form = ({persons, setPersons}) =>{
+const Form = ({persons, setPersons, setNoti}) =>{
 
     const [newName, setNewName] = useState('')
     const [newNum, setNewNum] = useState('')
@@ -17,6 +17,10 @@ const Form = ({persons, setPersons}) =>{
             services.change(newPer.id, newPer)
             .then(response => {
                 setPersons(persons.map(p=>p.id === newPer.id ? response.data : p))
+                setNoti(`${newPer.name}'s number changed`)
+                setTimeout(() => {
+                    setNoti(null)
+                }, 5000)
             })
           }
         }
@@ -27,7 +31,10 @@ const Form = ({persons, setPersons}) =>{
             services.add(obj)
             .then(response=>{
                 setPersons(p => p.concat(response.data))
-                console.log('completed adding')
+                setNoti(`Added ${obj.name}`)
+                setTimeout(() => {
+                    setNoti(null)
+                }, 5000)
             })
         }
       }
