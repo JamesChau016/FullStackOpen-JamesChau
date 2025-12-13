@@ -9,9 +9,16 @@ const Form = ({persons, setPersons}) =>{
 
     const addName = (e) =>{
         const obj={name:newName, number: newNum}
+        const per = persons.find(o => o.name===newName)
         e.preventDefault()
-        if ((persons.find(o=>o.name===newName))){
-          window.alert(`${newName} is already added to the phonebook`)
+        if (per){
+          if (window.confirm(`${newName} is already added to the phonebook, replace the old number with a new one?`)){
+            const newPer = {...per, number: newNum}
+            services.change(newPer.id, newPer)
+            .then(response => {
+                setPersons(persons.map(p=>p.id === newPer.id ? response.data : p))
+            })
+          }
         }
         else if ((newName==='')||(newNum==='')){
             window.alert('Please enter all values')
