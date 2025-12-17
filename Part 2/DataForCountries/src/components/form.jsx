@@ -11,7 +11,6 @@ const Form = ({list, setCountries}) =>{
         const temp=list.filter(country => 
           ((country.name.common.toLowerCase().includes(key))||(country.name.official.toLowerCase().includes(key))))
         setCountries(temp)
-        console.log(list)
       },[key])
 
     return(
