@@ -1,0 +1,17 @@
+{
+  "name": "part-3",
+  "version": "0.0.1",
+  "description": "",
+  "license": "MIT",
+  "author": "James",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node index.js",
+    "dev": "node --watch index.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
