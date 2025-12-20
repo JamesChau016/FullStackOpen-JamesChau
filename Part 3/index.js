@@ -30,7 +30,12 @@ const randomID = () =>{
 }
 
 app.use(express.json())
-app.use(morgan('dev'))
+
+
+morgan.token('body', (request)=> JSON.stringify(request.body))
+morgan.format('tiny and body', ':method :url :status :res[content-length] - :response-time ms :body')
+app.use(morgan('tiny and body'))
+
 
 
 
@@ -71,7 +76,6 @@ app.post('/api/persons', (request, response) =>{
     }
 
     let idP = randomID()
-    console.log(idP)
     const idList = persons.map(n => n.id)
     while (idList.includes(idP)){
         idP = randomID()
@@ -82,7 +86,6 @@ app.post('/api/persons', (request, response) =>{
         name : body.name,
         number : body.number
     }
-
     persons.concat(person)
 
     response.json(person)
