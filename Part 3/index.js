@@ -1,5 +1,6 @@
 const express = require('express')
 const morgan = require('morgan')
+const cors = require('cors')
 const app = express()
 
 let persons = [
@@ -30,7 +31,7 @@ const randomID = () =>{
 }
 
 app.use(express.json())
-
+app.use(cors())
 
 morgan.token('body', (request)=> JSON.stringify(request.body))
 morgan.format('tiny and body', ':method :url :status :res[content-length] - :response-time ms :body')
