@@ -32,6 +32,7 @@ const randomID = () =>{
 
 app.use(express.json())
 app.use(cors())
+app.use(express.static('dist'))
 
 morgan.token('body', (request)=> JSON.stringify(request.body))
 morgan.format('tiny and body', ':method :url :status :res[content-length] - :response-time ms :body')
