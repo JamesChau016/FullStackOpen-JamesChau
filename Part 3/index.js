@@ -37,7 +37,9 @@ morgan.token('body', (request)=> JSON.stringify(request.body))
 morgan.format('tiny and body', ':method :url :status :res[content-length] - :response-time ms :body')
 app.use(morgan('tiny and body'))
 
-
+app.get('/', (req, res) => {
+    res.send('Backend is running!');
+  });
 
 
 app.get('/api/persons', (request,response)=>{
