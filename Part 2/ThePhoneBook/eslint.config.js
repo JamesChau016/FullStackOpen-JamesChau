@@ -26,14 +26,5 @@ export default defineConfig([
     rules: {
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
     },
-    plugins: [react()],
-    server: {
-      proxy: {
-        '/api': {
-          target: 'http://localhost:3001',
-          changeOrigin: true,
-        },
-      }
-    },
   },
 ])
