@@ -30,7 +30,6 @@ const randomID = () =>{
 }
 
 app.use(express.json())
-
 app.use(express.static('dist'))
 
 morgan.token('body', (request)=> JSON.stringify(request.body))
