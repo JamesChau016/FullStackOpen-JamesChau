@@ -24,12 +24,6 @@ app.get('/api/persons', (request,response)=>{
     })
 })
 
-// app.get('/info', (request,response)=>{
-//     const now = new Date()
-//     const total = Person.countDocuments({})
-//     response.send(`<p>Phonebook has info for ${total} people</p>
-//                     <div>${now}</div>`)
-// })
 
 app.get('/api/persons/:id', (request, response)=>{
     const id = request.params.id
@@ -65,12 +59,6 @@ app.post('/api/persons', (request, response) =>{
     
 })
 
-// app.delete('/api/persons/:id', (request, response)=>{
-//     const id = request.params.id
-//     Person.findOneAndDelete({id}).then(deleted =>{
-//         console.log(`deleted ${deleted}`)
-//     })
-// })
 
 
 
