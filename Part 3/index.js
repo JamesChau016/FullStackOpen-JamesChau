@@ -26,8 +26,7 @@ app.get('/api/persons', (request,response)=>{
 
 
 app.get('/api/persons/:id', (request, response, next)=>{
-    const id = request.params.id
-    Person.findById(id).then(result =>{
+    Person.findById(request.params.id).then(result =>{
         if (!result){
             response.status(404).end()
         }
