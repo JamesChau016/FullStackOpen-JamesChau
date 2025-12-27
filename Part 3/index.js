@@ -28,13 +28,10 @@ app.get('/api/persons', (request,response)=>{
 app.get('/api/persons/:id', (request, response, next)=>{
     const id = request.params.id
     Person.findById(id).then(result =>{
-        if (result){
-            response.json(result)
-        }
-        else{
+        if (!result){
             response.status(404).end()
         }
-        
+        response.json(result)
     })
     .catch(error=>next(error))
 })
@@ -49,9 +46,8 @@ app.post('/api/persons', (request, response) =>{
     } else if (!body.number) {
         return response.status(400).json({
           error: 'number missing',
-        })}
-   
-
+        })
+    } 
 
     const person = new Person({
         name : body.name,
@@ -61,7 +57,23 @@ app.post('/api/persons', (request, response) =>{
     person.save().then(savedValue =>{
         response.json(savedValue)
     })
-    
+})
+
+app.put('/api/persons/:id', (request, response, next) =>{
+    const { name, number } = request.body
+
+    Person.findById(request.params.id).then(person =>{
+        if (!person){
+            response.status(404).end()
+        }
+
+        person.name = name
+        person.number = number
+
+        return person.save().then(updatedValue =>{
+            response.json(updatedValue)
+        })
+    }).catch(error => next(error))
 })
 
 app.delete('/api/persons/:id', (request,response,next)=>{
