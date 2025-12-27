@@ -42,6 +42,12 @@ const Form = ({persons, setPersons, setNoti, setErr}) =>{
                     setNoti(null)
                 }, 5000)
             })
+            .catch(error=>{
+                setErr(error.response.data.error)
+                setTimeout(() => {
+                    setErr(null)
+                }, 5000)
+            })
         }
       }
     
