@@ -57,12 +57,15 @@ app.post('/api/persons', (request, response) =>{
     
 })
 
-app.delete('api/persons/:id', (request,response, next)=>{
-    Person.findByIdAndDelete(request.params.id).then(result=>{
-        response.status(204).end()
-    }).catch(error=>{
-        next(error)
+app.delete('/api/persons/:id', (request,response)=>{
+    const idDel = request.params.id
+    Person.findByIdAndDelete(idDel)
+    .then(result => {
+      response.status(204).end()
     })
+    // }).catch(error=>{
+    //     next(error)
+    // })
 })
 
 
