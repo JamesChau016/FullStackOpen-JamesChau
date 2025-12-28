@@ -10,6 +10,7 @@
     "test": "jest",
     "start": "node index.js",
     "dev": "node --watch index.js",
+    "lint": "eslint .",
     "build:ui": "rm -rf dist && cd '../Part 2/ThePhoneBook' && npm run build && cp -r dist './Part 3'",
     "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push"
   },
