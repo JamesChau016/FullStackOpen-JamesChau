@@ -47,7 +47,7 @@ const Form = ({persons, setPersons, setNoti, setErr}) =>{
                 console.log(msg)
                 setErr(msg)
                 setTimeout(() => {
-                    setNoti(null)
+                    setErr(null)
                 }, 5000)
             })
         }
