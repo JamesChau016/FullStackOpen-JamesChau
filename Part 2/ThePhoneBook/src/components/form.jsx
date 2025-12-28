@@ -36,7 +36,6 @@ const Form = ({persons, setPersons, setNoti, setErr}) =>{
             services.add({name:newName, number: newNum})
             .then(response=>{
                 setPersons(p => p.concat(response.data))
-                console.log(response)
                 setNoti(`Added ${newName}`)
                 setTimeout(() => {
                     setNoti(null)
@@ -44,11 +43,10 @@ const Form = ({persons, setPersons, setNoti, setErr}) =>{
             })
             .catch(error=>{
                 const msg=error.response.data.error
-                console.log(msg)
                 setErr(msg)
                 setTimeout(() => {
                     setErr(null)
-                }, 5000)
+                }, 6000)
             })
         }
       }
