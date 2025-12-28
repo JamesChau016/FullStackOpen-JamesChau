@@ -8,7 +8,6 @@ const Form = ({persons, setPersons, setNoti, setErr}) =>{
     const [newNum, setNewNum] = useState('')
 
     const addName = (e) =>{
-        const obj={name:newName, number: newNum}
         const per = persons.find(o => o.name===newName)
         e.preventDefault()
         if (per){
@@ -34,19 +33,20 @@ const Form = ({persons, setPersons, setNoti, setErr}) =>{
             window.alert('Please enter all values')
         }
         else{
-            services.add(obj)
+            services.add({name:newName, number: newNum})
             .then(response=>{
                 setPersons(p => p.concat(response.data))
-                setNoti(`Added ${obj.name}`)
+                console.log(response)
+                setNoti(`Added ${newName}`)
                 setTimeout(() => {
                     setNoti(null)
                 }, 5000)
             })
             .catch(error=>{
-                setErr(error.response.data.error)
-                setTimeout(() => {
-                    setErr(null)
-                }, 5000)
+                console.error("Full error object:", error)
+                const errorMessage = error.response?.data?.error || "An unknown error occurred"
+                console.log(errorMessage)
+                setErr(errorMessage)
             })
         }
       }
