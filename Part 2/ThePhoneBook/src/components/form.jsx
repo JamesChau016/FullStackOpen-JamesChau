@@ -43,10 +43,9 @@ const Form = ({persons, setPersons, setNoti, setErr}) =>{
                 }, 5000)
             })
             .catch(error=>{
-                console.error("Full error object:", error)
-                const errorMessage = error.response?.data?.error || "An unknown error occurred"
-                console.log(errorMessage)
-                setErr(errorMessage)
+                const msg=error.response.data.error
+                console.log(msg)
+                setErr(msg)
             })
         }
       }
