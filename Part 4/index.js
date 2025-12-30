@@ -1,8 +1,8 @@
 const app = require('./app')
 const config = require('./utils/config')
-const logger = require('./utils/logger')
+const {info, error} = require('./utils/logger')
 
 app.listen(config.PORT, () => {
-  logger.info(`Server running on port ${config.PORT}`)
-  logger.info(`http://localhost:3003/api/blogs`)
+  info(`Server running on port ${config.PORT}`)
+  info(`http://localhost:3003/api/blogs`)
 })
