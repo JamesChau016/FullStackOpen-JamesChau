@@ -4,17 +4,14 @@ const Blog = require('./models/blog')
 const config = require('./utils/config')
 const logger = require('./utils/logger')
 const blogsRouter = require('./controllers/blogs')
+const middleware = require('./utils/middleware')
 
 const app = express()
 app.use(express.json())
 
-app.use('/api/blogs', blogsRouter)
-
-
-
 mongoose.set('strictQuery',false)
-
 logger.info('connecting to MongoDB')
+
 mongoose.connect(config.url, { family: 4 })
   .then(result => {
     logger.info('connected to MongoDB')
@@ -22,5 +19,12 @@ mongoose.connect(config.url, { family: 4 })
   .catch(error => {
     logger.error('error connecting to MongoDB:', error.message)
   })
+
+app.use(middleware.requestLogger)
+
+app.use('/api/blogs', blogsRouter)
+
+app.use(middleware.unknownEndpoint)
+app.use(middleware.errorHandler)
 
 module.exports = app
