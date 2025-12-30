@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
 
@@ -10,12 +11,22 @@ const blogSchema = mongoose.Schema({
   likes: Number,
 })
 
+blogSchema.set('toJSON', {
+  transform: (document, object) =>{
+    object.id = object._id.toString()
+    delete object.__v
+    delete object._id
+  }
+
+})
+
 const Blog = mongoose.model('Blog', blogSchema)
 
 const mongoUrl = process.env.MONGODB_URI
 
 mongoose.set('strictQuery',false)
-console.log('connectng to MongoDB')
+
+console.log('connecting to MongoDB')
 mongoose.connect(mongoUrl, { family: 4 })
   .then(result => {
     console.log('connected to MongoDB')
@@ -23,6 +34,8 @@ mongoose.connect(mongoUrl, { family: 4 })
   .catch(error => {
     console.log('error connecting to MongoDB:', error.message)
   })
+
+
 
 app.use(express.json())
 
@@ -43,4 +56,5 @@ app.post('/api/blogs', (request, response) => {
 const PORT = process.env.PORT
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
+  console.log(`http://localhost:3003/api/blogs`)
 })
