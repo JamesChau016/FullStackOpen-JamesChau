@@ -2,6 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const Blog = require('./models/blog')
 const config = require('./utils/config')
+const logger = require('./utils/logger')
 
 const app = express()
 
@@ -11,13 +12,13 @@ const app = express()
 
 mongoose.set('strictQuery',false)
 
-console.log('connecting to MongoDB')
+logger.info('connecting to MongoDB')
 mongoose.connect(config.url, { family: 4 })
   .then(result => {
-    console.log('connected to MongoDB')
+    logger.info('connected to MongoDB')
   })
   .catch(error => {
-    console.log('error connecting to MongoDB:', error.message)
+    logger.error('error connecting to MongoDB:', error.message)
   })
 
 
@@ -40,6 +41,6 @@ app.post('/api/blogs', (request, response) => {
 
 
 app.listen(config.PORT, () => {
-  console.log(`Server running on port ${config.PORT}`)
-  console.log(`http://localhost:3003/api/blogs`)
+  logger.info(`Server running on port ${config.PORT}`)
+  logger.info(`http://localhost:3003/api/blogs`)
 })
