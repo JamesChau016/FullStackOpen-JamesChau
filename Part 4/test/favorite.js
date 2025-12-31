@@ -65,6 +65,7 @@ describe('favorite blog', () => {
         }
       ]
     
+    
     test('when list only have one blog, favorite is that one blog', () => {
         const result = listHelper.favoriteBlog(oneBlog)
         assert.deepStrictEqual(result, oneBlog[0])

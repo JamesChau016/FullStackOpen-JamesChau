@@ -18,12 +18,9 @@ const favoriteBlog = (blogs) => {
     return blogs[0]
   }
   else{
-    const max = Math.max(...blogs.map(b => b.likes))
-    return blogs.find(b => b.likes === max)
+    return blogs.find(b => b.likes === Math.max(...blogs.map(b => b.likes)))
   }
-    
 }
-  
 
   module.exports = {
     dummy,
