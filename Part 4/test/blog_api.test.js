@@ -26,6 +26,7 @@ const initialBlogs = [
 beforeEach(async () => {
     await Blog.deleteMany({})
     await Blog.insertMany(initialBlogs)
+    console.log('saved')
 })
 
 test('blogs are returned as json', async () => {
@@ -41,7 +42,7 @@ test('blogs are returned as json', async () => {
 
 
 test('all blogs are returned', async () => {
+    console.log('entered test')
     const response = await api.get('/api/blogs')
-
     assert.strictEqual(response.body.length, initialBlogs.length)
 })
