@@ -45,8 +45,28 @@ test('all blogs are returned', async () => {
     assert.strictEqual(response.body.length, initialBlogs.length)
 })
 
-test.only('check unique identifier', async () => {
+test('check unique identifier', async () => {
     const response = await api.get('/api/blogs')
     assert('id' in response.body[0])
     assert.strictEqual(response.body[0]._id, undefined)
+})
+
+test('add a new blog', async () => {
+    const newBlog = {
+        "title" : "newBlog",
+        "author" : "random",
+        "url" : "abc.com",
+        "likes" : "9"
+    }
+
+    await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(201)
+        .expect('Content-Type', /application\/json/)
+    
+    const response = await api.get('/api/blogs')
+
+    assert.strictEqual(response.body.length, initialBlogs.length +1)
+        
 })
