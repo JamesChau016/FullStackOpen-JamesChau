@@ -3,7 +3,7 @@ const dummy = (blogs) => {
   }
 
 const totalLikes = (blogs) => {
-  if (blogs.length == 1){
+  if (blogs.length === 1){
     return blogs[0].likes
   }
   else{
@@ -11,11 +11,23 @@ const totalLikes = (blogs) => {
       return accumulator + curr.likes
     },0)
   }
-  
 }
+
+const favoriteBlog = (blogs) => {
+  if (blogs.length === 1){
+    return blogs[0]
+  }
+  else{
+    const max = Math.max(...blogs.map(b => b.likes))
+    return blogs.find(b => b.likes === max)
+  }
+    
+}
+  
 
   module.exports = {
     dummy,
-    totalLikes
+    totalLikes,
+    favoriteBlog
   }
 
