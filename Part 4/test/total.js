@@ -64,6 +64,13 @@ describe('total likes', () => {
           __v: 0
         }  
       ]
+
+    const emptyList = []
+
+    test('when list is empty, equals zero', () => {
+        const result = listHelper.totalLikes(emptyList)
+        assert.strictEqual(result, 0)
+    })
   
     test('when list has only one blog, equals the likes of that', () => {
       const result = listHelper.totalLikes(listWithOneBlog)
@@ -74,7 +81,6 @@ describe('total likes', () => {
         const result = listHelper.totalLikes(listWithManyBlogs)
         let testResult = 0
         listWithManyBlogs.forEach(l => testResult = testResult + l.likes)
-        console.log(testResult)
         assert.strictEqual(result, testResult)
     })
   })
