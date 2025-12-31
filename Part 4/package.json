@@ -5,7 +5,7 @@
     "mongoose": "^9.1.0"
   },
   "scripts": {
-    "test": "jest",
+    "test": "node --test",
     "start": "node index.js",
     "dev": "node --watch index.js"
   }
