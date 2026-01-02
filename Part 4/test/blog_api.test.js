@@ -93,3 +93,31 @@ test('default to 0 when likes property is undefined', async () => {
 
     assert.strictEqual(newBlog.likes, 0)
 })
+
+test('if blog\'s title or url is missing', async () => {
+    const blogWithoutTitle = {
+        "author" : "Chuck",
+        "url" : "youtube.com",
+        "likes" : "9"
+    }
+
+    const blogWithoutUrl = {
+        "title" : "no url",
+        "author" : "Jimmy",
+        "likes" : "1216"
+    }
+
+    await api
+        .post('/api/blogs')
+        .send(blogWithoutTitle)
+        .expect(400)
+    
+    await api
+        .post('/api/blogs')
+        .send(blogWithoutUrl)
+        .expect(400)
+    
+    const response = await api.get('/api/blogs')
+
+    assert.strictEqual(response.body.length, initialBlogs.length)
+})

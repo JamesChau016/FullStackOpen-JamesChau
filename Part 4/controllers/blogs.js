@@ -22,6 +22,9 @@ blogsRouter.post('/', async (request, response) => {
   if(!blog.title){
     response.status(400).json({error: 'missing title'})
   }
+  else if (!blog.url){
+    response.status(400).json({error: 'missing url'})
+  }
   else{
     if (!blog.likes){
       blog.likes=0
@@ -30,6 +33,4 @@ blogsRouter.post('/', async (request, response) => {
     response.status(201).json(savedBlog)
   }
 })
-
-
 module.exports = blogsRouter
