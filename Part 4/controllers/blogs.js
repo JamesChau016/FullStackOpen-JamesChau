@@ -19,7 +19,7 @@ blogsRouter.get('/:id', async (request, response, next) => {
 blogsRouter.post('/', async (request, response) => {
   const blog = new Blog(request.body)
 
-  if(!body.title){
+  if(!blog.title){
     response.status(400).json({error: 'missing title'})
   }
 
