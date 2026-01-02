@@ -118,6 +118,18 @@ test('if blog\'s title or url is missing', async () => {
     assert.strictEqual(response.body.length, initialBlogs.length)
 })
 
+test('delete a blog', async () => {
+    const blogsList = await api.get('/api/blogs')
+    const firstBlogId = blogsList.body[0].id
+
+    await api
+        .delete(`/api/blogs/${firstBlogId}`)
+        .expect(204)
+    
+    const response = await api.get('/api/blogs')
+    assert.strictEqual(response.body.length, initialBlogs.length-1)
+})
+
 
 after(async () => {
     await mongoose.connection.close()
