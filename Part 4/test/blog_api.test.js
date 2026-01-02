@@ -73,3 +73,23 @@ test('add a new blog', async () => {
 
     assert(titles.includes('newBlog'))
 })
+
+test('default to 0 when likes property is undefined', async () => {
+    const blogWithNoLikes = {
+        "title" : "new blog with no likes",
+        "author" : "Chuck",
+        "url" : "youtube.com"
+    }
+
+    await api
+        .post('/api/blogs')
+        .send(blogWithNoLikes)
+        .expect(201)
+        .expect('Content-Type', /application\/json/)
+    
+    const response = await api.get('/api/blogs')
+
+    const newBlog = response.body.find(blog => blog.title === "new blog with no likes")
+
+    assert.strictEqual(newBlog.likes, 0)
+})
