@@ -130,6 +130,24 @@ test('delete a blog', async () => {
     assert.strictEqual(response.body.length, initialBlogs.length-1)
 })
 
+test('change contents of existing blogs', async () => {
+    const changedFirstBlog = {
+        "likes" : 68
+    }
+
+    const blogsList = await api.get('/api/blogs')
+    const firstBlogId = blogsList.body[0].id
+
+    await api
+        .put(`/api/blogs/${firstBlogId}`)
+        .send(changedFirstBlog)
+        .expect(200)
+        .expect('Content-Type', /application\/json/)
+
+    const response = await api.get(`/api/blogs/${firstBlogId}`)
+    assert.strictEqual(changedFirstBlog.likes, response.body.likes)
+})
+
 
 after(async () => {
     await mongoose.connection.close()
