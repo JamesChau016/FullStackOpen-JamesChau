@@ -34,10 +34,6 @@ test('blogs are returned as json', async () => {
       .expect(200)
       .expect('Content-Type', /application\/json/)
   })
-  
-  after(async () => {
-    await mongoose.connection.close()
-  })
 
 
 test('all blogs are returned', async () => {
@@ -120,4 +116,9 @@ test('if blog\'s title or url is missing', async () => {
     const response = await api.get('/api/blogs')
 
     assert.strictEqual(response.body.length, initialBlogs.length)
+})
+
+
+after(async () => {
+    await mongoose.connection.close()
 })
