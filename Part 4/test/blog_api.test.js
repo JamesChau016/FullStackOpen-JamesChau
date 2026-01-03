@@ -4,24 +4,11 @@ const mongoose = require('mongoose')
 const supertest = require('supertest')
 const app = require('../app')
 const Blog = require('../models/blog')
+const { initialBlogs, blogsInDb } = require('./test_helper')
 
 
 const api = supertest(app)
 
-const initialBlogs = [
-    {
-        "title" : "Test blog 1",
-        "author" : "James",
-        "url" : "abc.com",
-        "likes" : "7"
-    },
-    {
-        "title" : "Test blog 2",
-        "author" : "James",
-        "url" : "abc.com",
-        "likes" : "123"
-    },
-]
 
 beforeEach(async () => {
     await Blog.deleteMany({})
@@ -61,11 +48,10 @@ test('add a new blog', async () => {
         .expect(201)
         .expect('Content-Type', /application\/json/)
     
-    const response = await api.get('/api/blogs')
+    const listAfter = await blogsInDb()
+    const titles = listAfter.map(blog => blog.title)
 
-    const titles = response.body.map(blog => blog.title)
-
-    assert.strictEqual(response.body.length, initialBlogs.length +1)
+    assert.strictEqual(listAfter.length, initialBlogs.length +1)
 
     assert(titles.includes('newBlog'))
 })
@@ -83,9 +69,9 @@ test('default to 0 when likes property is undefined', async () => {
         .expect(201)
         .expect('Content-Type', /application\/json/)
     
-    const response = await api.get('/api/blogs')
+    const response = await blogsInDb()
 
-    const newBlog = response.body.find(blog => blog.title === "new blog with no likes")
+    const newBlog = response.find(blog => blog.title === "new blog with no likes")
 
     assert.strictEqual(newBlog.likes, 0)
 })
@@ -126,8 +112,8 @@ test('delete a blog', async () => {
         .delete(`/api/blogs/${firstBlogId}`)
         .expect(204)
     
-    const response = await api.get('/api/blogs')
-    assert.strictEqual(response.body.length, initialBlogs.length-1)
+    const response = await blogsInDb()
+    assert.strictEqual(response.length, initialBlogs.length-1)
 })
 
 test('change contents of existing blogs', async () => {
