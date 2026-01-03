@@ -24,14 +24,14 @@ test('blogs are returned as json', async () => {
 
 
 test('all blogs are returned', async () => {
-    const response = await api.get('/api/blogs')
-    assert.strictEqual(response.body.length, initialBlogs.length)
+    const response = await blogsInDb()
+    assert.strictEqual(response.length, initialBlogs.length)
 })
 
 test('check unique identifier', async () => {
-    const response = await api.get('/api/blogs')
-    assert('id' in response.body[0])
-    assert.strictEqual(response.body[0]._id, undefined)
+    const response = await blogsInDb()
+    assert('id' in response[0])
+    assert.strictEqual(response[0]._id, undefined)
 })
 
 test('add a new blog', async () => {
@@ -99,14 +99,14 @@ test('if blog\'s title or url is missing', async () => {
         .send(blogWithoutUrl)
         .expect(400)
     
-    const response = await api.get('/api/blogs')
+    const response = await blogsInDb()
 
-    assert.strictEqual(response.body.length, initialBlogs.length)
+    assert.strictEqual(response.length, initialBlogs.length)
 })
 
 test('delete a blog', async () => {
-    const blogsList = await api.get('/api/blogs')
-    const firstBlogId = blogsList.body[0].id
+    const blogsList = await blogsInDb()
+    const firstBlogId = blogsList[0].id
 
     await api
         .delete(`/api/blogs/${firstBlogId}`)
@@ -121,8 +121,8 @@ test('change contents of existing blogs', async () => {
         "likes" : 68
     }
 
-    const blogsList = await api.get('/api/blogs')
-    const firstBlogId = blogsList.body[0].id
+    const blogsList = await blogsInDb()
+    const firstBlogId = blogsList[0].id
 
     await api
         .put(`/api/blogs/${firstBlogId}`)
@@ -130,8 +130,8 @@ test('change contents of existing blogs', async () => {
         .expect(200)
         .expect('Content-Type', /application\/json/)
 
-    const response = await api.get(`/api/blogs/${firstBlogId}`)
-    assert.strictEqual(changedFirstBlog.likes, response.body.likes)
+    const response = await Blog.findById(firstBlogId)
+    assert.strictEqual(changedFirstBlog.likes, response.likes)
 })
 
 
