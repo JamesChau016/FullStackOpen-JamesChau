@@ -45,7 +45,82 @@ describe('when there is initially one user in db', async () => {
         assert(usernames.includes(newUser.username))
     })
 
-    test('')
+    test('username must be unique when create', async () => {
+        const userList = await usersInDb()
+
+        const newUserSameName = {
+            username: 'James',
+            name: 'Jimmy',
+            password: 'jim'
+        }
+
+        const result = await api
+            .post('/api/users')
+            .send(newUserSameName)
+            .expect(400)
+            .expect('Content-Type', /application\/json/)
+        
+        const userListAfter = await usersInDb()
+
+        assert(result.body.error.includes('expected `username` to be unique'))
+        assert.strictEqual(userList.length, userListAfter.length)
+    })
+
+    test('username and password must be at least 3 characters', async () => {
+        const userList = await usersInDb()
+
+        const invalidUsername = {
+            username: 'A',
+            name: 'Aaron',
+            password: 'ADMIN'
+        }
+
+        const invalidPassword = {
+            username: 'Aaron',
+            name: 'Jesse',
+            password: 'Yo'
+        }
+
+        const resultUsername = await api
+            .post('/api/users')
+            .send(invalidUsername)
+            .expect(400)
+            .expect('Content-Type', /application\/json/)
+        
+
+        assert(resultUsername.body.error.includes('username must be atleast 3 characters'))
+
+        const resultPassword = await api
+            .post('/api/users')
+            .send(invalidPassword)
+            .expect(400)
+            .expect('Content-Type', /application\/json/)
+        
+        
+        assert(resultPassword.body.error.includes('password must be atleast 3 characters'))
+
+        const userListAfter = await usersInDb()
+        assert.strictEqual(userList.length, userListAfter.length)
+    })
+
+    test('missing username or password', async () => {
+        const userList = await usersInDb()
+
+        const invalidUser = {
+            name: 'Jesse'
+        }
+
+        const result = await api
+            .post('/api/users')
+            .send(invalidUser)
+            .expect(400)
+            .expect('Content-Type', /application\/json/)
+        
+        assert(result.body.error.includes('please enter your username and password'))
+
+        const userListAfter = await usersInDb()
+        assert.strictEqual(userList.length, userListAfter.length)
+    })
 })
 
 after(async () => {
