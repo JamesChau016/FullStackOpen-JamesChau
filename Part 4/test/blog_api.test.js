@@ -13,8 +13,6 @@ const api = supertest(app)
 let token = ''
 
 beforeEach(async () => {
-    await Blog.deleteMany({})
-    await Blog.insertMany(initialBlogs)
     await User.deleteMany({})
     await api
         .post('/api/users')
@@ -22,15 +20,21 @@ beforeEach(async () => {
             "username" : "Kim",
             "password" : "kmm"
         })
-        .expect(201)
+
     const result = await api
         .post('/api/login')
         .send({
             "username" : "Kim",
             "password" : "kmm"
         })
-        .expect(200)
     token = result.body.token
+    await Blog.deleteMany({})
+    for (let i=0; i<initialBlogs.length; i++){
+        await api
+            .post('/api/blogs')
+            .set('Authorization', `Bearer ${token}`)
+            .send(initialBlogs[i])
+    }
 })
 
 test('blogs are returned as json', async () => {
@@ -129,7 +133,6 @@ test('if blog\'s title or url is missing', async () => {
 test('delete a blog', async () => {
     const blogsList = await blogsInDb()
     const firstBlogId = blogsList[0].id.toString()
-    console.log(firstBlogId)
 
     await api
         .delete(`/api/blogs/${firstBlogId}`)
@@ -146,7 +149,7 @@ test('change contents of existing blogs', async () => {
     }
 
     const blogsList = await blogsInDb()
-    const firstBlogId = blogsList[0].id
+    const firstBlogId = blogsList[0].id.toString()
 
     await api
         .put(`/api/blogs/${firstBlogId}`)
