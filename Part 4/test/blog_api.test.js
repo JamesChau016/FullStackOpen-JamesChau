@@ -4,15 +4,33 @@ const mongoose = require('mongoose')
 const supertest = require('supertest')
 const app = require('../app')
 const Blog = require('../models/blog')
+const User = require('../models/user')
 const { initialBlogs, blogsInDb } = require('./test_helper')
 
 
 const api = supertest(app)
 
+let token = ''
 
 beforeEach(async () => {
     await Blog.deleteMany({})
     await Blog.insertMany(initialBlogs)
+    await User.deleteMany({})
+    await api
+        .post('/api/users')
+        .send({
+            "username" : "Kim",
+            "password" : "kmm"
+        })
+        .expect(201)
+    const result = await api
+        .post('/api/login')
+        .send({
+            "username" : "Kim",
+            "password" : "kmm"
+        })
+        .expect(200)
+    token = result.body.token
 })
 
 test('blogs are returned as json', async () => {
@@ -44,6 +62,7 @@ test('add a new blog', async () => {
 
     await api
         .post('/api/blogs')
+        .set('Authorization', `Bearer ${token}`)
         .send(newBlog)
         .expect(201)
         .expect('Content-Type', /application\/json/)
@@ -65,6 +84,7 @@ test('default to 0 when likes property is undefined', async () => {
 
     await api
         .post('/api/blogs')
+        .set('Authorization', `Bearer ${token}`)
         .send(blogWithNoLikes)
         .expect(201)
         .expect('Content-Type', /application\/json/)
@@ -91,11 +111,13 @@ test('if blog\'s title or url is missing', async () => {
 
     await api
         .post('/api/blogs')
+        .set('Authorization', `Bearer ${token}`)
         .send(blogWithoutTitle)
         .expect(400)
     
     await api
         .post('/api/blogs')
+        .set('Authorization', `Bearer ${token}`)
         .send(blogWithoutUrl)
         .expect(400)
     
@@ -106,10 +128,12 @@ test('if blog\'s title or url is missing', async () => {
 
 test('delete a blog', async () => {
     const blogsList = await blogsInDb()
-    const firstBlogId = blogsList[0].id
+    const firstBlogId = blogsList[0].id.toString()
+    console.log(firstBlogId)
 
     await api
         .delete(`/api/blogs/${firstBlogId}`)
+        .set('Authorization', `Bearer ${token}`)
         .expect(204)
     
     const response = await blogsInDb()
