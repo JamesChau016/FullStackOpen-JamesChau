@@ -9,6 +9,7 @@ const middleware = require('./utils/middleware')
 
 const app = express()
 app.use(express.json())
+app.use(express.static('dist'))
 
 mongoose.set('strictQuery',false)
 logger.info('connecting to MongoDB')
