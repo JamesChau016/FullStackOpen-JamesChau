@@ -18,14 +18,13 @@ const LoginForm = ({username, password, setUsername, setPassword, setUser}) => {
             console.log('wrong password')
             console.log(error)
         }
-
     }
     return(
         <>
             <h1>Log in</h1>
             <form onSubmit={handleLogin}>
                 <div>
-                    <label>username: 
+                    <label>username: &nbsp;
                         <input 
                             type = "text"
                             value = {username}
@@ -34,7 +33,7 @@ const LoginForm = ({username, password, setUsername, setPassword, setUser}) => {
                     </label>
                 </div>
                 <div>
-                    <label>password: 
+                    <label>password: &nbsp;
                         <input
                             type = "password"
                             value = {password}

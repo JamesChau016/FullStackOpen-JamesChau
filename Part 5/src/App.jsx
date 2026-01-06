@@ -15,7 +15,7 @@ const App = () => {
       setBlogs( blogs )
     )  
   }, [])
-  
+
   useEffect(() => {
     const loggedUser = window.localStorage.getItem('loggedInUser')
     if (loggedUser) {
@@ -36,7 +36,7 @@ const App = () => {
   }
   else{
     return(
-      <Blog blogs={blogs} user={user}/>
+      <Blog blogs={blogs} user={user} setUser={setUser}/>
     )
   }
 }
