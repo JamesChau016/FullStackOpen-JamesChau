@@ -1,7 +1,15 @@
-const Blog = ({ blog }) => (
-  <div>
-    {blog.title} {blog.author}
-  </div>  
-)
+const Blog = ({ blogs, user }) => {
+
+  return(
+    <div>
+        <h2>blogs</h2>
+        <p>{user.name} logged in</p>
+        {console.log(blogs)}
+        {blogs.map((b,n)=>(
+          <div key={b.id}>blog {n}: {b.title} {b.author}</div>
+        ))}
+    </div>
+  )
+}
 
 export default Blog
