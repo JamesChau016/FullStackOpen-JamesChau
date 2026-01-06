@@ -5,12 +5,14 @@ const LoginForm = ({username, password, setUsername, setPassword, setUser}) => {
 
     const handleLogin = async (e) =>{
         e.preventDefault()
-        console.log(username, password)
         try{
             const user = await loginService.login({username, password})
             setUser(user)
             setUsername('')
             setPassword('')
+            window.localStorage.setItem(
+                'loggedInUser', JSON.stringify(user)
+              ) 
         }
         catch (error){
             console.log('wrong password')

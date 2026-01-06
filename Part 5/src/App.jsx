@@ -15,6 +15,14 @@ const App = () => {
       setBlogs( blogs )
     )  
   }, [])
+  
+  useEffect(() => {
+    const loggedUser = window.localStorage.getItem('loggedInUser')
+    if (loggedUser) {
+      const user = JSON.parse(loggedUser)
+      setUser(user)
+    }
+  }, [])
 
   if (!user){
     return(
