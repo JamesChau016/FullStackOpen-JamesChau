@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import LoginForm  from './components/Login'
 import blogService from './services/blogs'
-import loginService from './services/login'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -21,6 +20,7 @@ const App = () => {
     if (loggedUser) {
       const user = JSON.parse(loggedUser)
       setUser(user)
+      blogService.setToken(user.token)
     }
   }, [])
 
@@ -36,7 +36,7 @@ const App = () => {
   }
   else{
     return(
-      <Blog blogs={blogs} user={user} setUser={setUser}/>
+      <Blog blogs={blogs} setBlogs={setBlogs} user={user} setUser={setUser}/>
     )
   }
 }
