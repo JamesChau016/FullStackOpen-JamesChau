@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import blogService from '../services/blogs'
 
-const Blog = ({ blogs, setBlogs, user, setUser }) => {
+const Blog = ({ blogs, setBlogs, user, setUser, setSucc }) => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
@@ -9,6 +9,10 @@ const Blog = ({ blogs, setBlogs, user, setUser }) => {
   const handleLogOut = () => {
     window.localStorage.removeItem('loggedInUser')
     setUser(null)
+    setSucc('logged out')
+    setTimeout(() => {
+      setSucc(null)
+    },5000)
   }
 
   const handleCreate = async (e) => {
@@ -21,11 +25,14 @@ const Blog = ({ blogs, setBlogs, user, setUser }) => {
 
     const result = await blogService.create(newBlog)
     setBlogs(b => b.concat(newBlog))
+    setSucc(`created blog successfully`)
+    setTimeout(() => {
+        setSucc(null)
+    }, 5000)
   }
 
   return(
-    <div>
-        <h2>blogs</h2>
+    <>
         <p>{user.name} logged in &nbsp;<button onClick={handleLogOut}>log out</button></p>
         <h2>create new</h2>
         <form onSubmit={handleCreate}>
@@ -58,11 +65,10 @@ const Blog = ({ blogs, setBlogs, user, setUser }) => {
           </div>
           <button type='submit'>create</button>
         </form>
-
         {blogs.map((b,n)=>(
           <div key={b.id}>blog {n}: {b.title} {b.author}</div>
         ))}
-    </div>
+    </>
   )
 }
 
