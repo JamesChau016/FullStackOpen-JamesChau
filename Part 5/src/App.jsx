@@ -49,11 +49,11 @@ const App = () => {
         <h2>blogs</h2>
         <Noti err={err} succ={succ}/>
         <Blog blogs={blogs}
-              setBlogs={setBlogs}
-              user={user}
-              setUser={setUser}
-              setErr={setErr}
-              setSucc={setSucc}/>
+            setBlogs={setBlogs}
+            user={user}
+            setUser={setUser}
+            setErr={setErr}
+            setSucc={setSucc}/>
       </>
     )
   }
