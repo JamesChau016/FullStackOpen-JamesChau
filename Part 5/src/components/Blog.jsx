@@ -4,7 +4,8 @@ import BlogForm from './BlogForm'
 const Blog = ({ blogs, setBlogs, user, setUser, setSucc }) => {
   const blogStyle = {
     paddingTop: 10,
-    paddingLeft: 2,
+    paddingLeft: 5,
+    paddingBottom: 5,
     border: 'solid',
     borderWidth: 1,
     marginBottom: 5,
@@ -38,7 +39,7 @@ const Blog = ({ blogs, setBlogs, user, setUser, setSucc }) => {
         </Toggle>
         {blogs.map((b,n)=>(
           <div style = {blogStyle} key={b.id}>
-            {b.title} {b.author}&nbsp;
+            {b.title} {b.author}
             <Toggle show={'view'} hide={'hide'}>
               {details(b)}
             </Toggle>
