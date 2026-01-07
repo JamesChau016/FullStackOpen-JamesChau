@@ -33,12 +33,20 @@ const Blog = ({ blogs, setBlogs, user, setUser, setSucc }) => {
       }, 5000)
   }
 
+  const handleRemove = async (blog) => {
+    if (window.confirm(`do you want to delete blog titled ${blog.title}`)){
+      const response = await blogService.deleteBlog(blog.id)
+      setBlogs(blogs.filter(b => b.id !== blog.id))
+    }   
+  }
+
   const details = (blog) => {
     return(
       <>
         <div>{blog.url}</div>
-        <div>likes {blog.likes}<button onClick={() => handleLike(blog.id)}>like</button></div>
-        <div>{user.name}</div>
+        <div>likes {blog.likes}&nbsp;<button onClick={() => handleLike(blog.id)}>like</button></div>
+        <div>{user.name} </div>
+        <button onClick={() => handleRemove(blog)}>remove</button><br/>
       </>
     )
   }
@@ -50,6 +58,7 @@ const Blog = ({ blogs, setBlogs, user, setUser, setSucc }) => {
           <BlogForm setBlogs={setBlogs}
                     setSucc={setSucc}/>
         </Toggle>
+        <br/>
         {blogs.map((b,n)=>(
           <div style = {blogStyle} key={b.id}>
             {b.title} {b.author}
