@@ -7,15 +7,15 @@ import blogService from './services/blogs'
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
-  const [username, setUsername] = useState('') 
-  const [password, setPassword] = useState('') 
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
   const [succ, setSucc] = useState(null)
   const [err, setErr] = useState(null)
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs.sort((a,b) => b.likes-a.likes) )
-    )  
+    )
   }, [])
 
   useEffect(() => {
@@ -34,13 +34,13 @@ const App = () => {
         <h1>Log in</h1>
         <Noti err={err} succ={succ}/>
         <LoginForm username={username}
-                password={password}
-                setUsername= {setUsername}
-                setPassword= {setPassword}
-                user={user}
-                setUser={setUser}
-                setErr={setErr}
-                setSucc={setSucc}/>
+          password={password}
+          setUsername= {setUsername}
+          setPassword= {setPassword}
+          user={user}
+          setUser={setUser}
+          setErr={setErr}
+          setSucc={setSucc}/>
       </>
     )
   }
@@ -50,11 +50,11 @@ const App = () => {
         <h2>blogs</h2>
         <Noti err={err} succ={succ}/>
         <Blog blogs={blogs}
-            setBlogs={setBlogs}
-            user={user}
-            setUser={setUser}
-            setErr={setErr}
-            setSucc={setSucc}/>
+          setBlogs={setBlogs}
+          user={user}
+          setUser={setUser}
+          setErr={setErr}
+          setSucc={setSucc}/>
       </>
     )
   }
