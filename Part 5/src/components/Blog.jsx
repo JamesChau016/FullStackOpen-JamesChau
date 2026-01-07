@@ -15,7 +15,7 @@ const Blog = ({ blogs, setBlogs, user, setUser, setSucc }) => {
   return(
     <>
         <p>{user.name} logged in &nbsp;<button onClick={handleLogOut}>log out</button></p>
-        <Toggle>
+        <Toggle show={'create new blog'} hide={'cancel'}>
           <BlogForm setBlogs={setBlogs}
                     setSucc={setSucc}/>
         </Toggle>
