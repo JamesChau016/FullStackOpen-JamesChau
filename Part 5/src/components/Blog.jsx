@@ -1,5 +1,6 @@
 import Toggle from './Toggle'
 import BlogForm from './BlogForm'
+import blogService from '../services/blogs'
 
 const Blog = ({ blogs, setBlogs, user, setUser, setSucc }) => {
   const blogStyle = {
@@ -20,11 +21,23 @@ const Blog = ({ blogs, setBlogs, user, setUser, setSucc }) => {
     },5000)
   }
 
+  const handleLike = async (id) => {
+    const blog = blogs.find(b => b.id===id)
+    const newLike = blog.likes +1
+    const newBlog = {...blog, likes: newLike}
+    const respone = await blogService.change(id, newBlog)
+    setBlogs(blogs.map(b => b.id===id ? newBlog : b))
+    setSucc(`you liked a blog titled ${blog.title}`)
+        setTimeout(() => {
+            setSucc(null)
+      }, 5000)
+  }
+
   const details = (blog) => {
     return(
       <>
         <div>{blog.url}</div>
-        <div>likes {blog.likes}<button>like</button></div>
+        <div>likes {blog.likes}<button onClick={() => handleLike(blog.id)}>like</button></div>
         <div>{user.name}</div>
       </>
     )
