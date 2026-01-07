@@ -25,7 +25,7 @@ const Blog = ({ blogs, setBlogs, user, setUser, setSucc }) => {
     const blog = blogs.find(b => b.id===id)
     const newLike = blog.likes +1
     const newBlog = { ...blog, likes: newLike }
-    const _respone = await blogService.change(id, newBlog)
+    await blogService.change(id, newBlog)
     setBlogs(blogs.map(b => b.id===id ? newBlog : b))
     setSucc(`you liked a blog titled ${blog.title}`)
     setTimeout(() => {
@@ -35,7 +35,7 @@ const Blog = ({ blogs, setBlogs, user, setUser, setSucc }) => {
 
   const handleRemove = async (blog) => {
     if (window.confirm(`do you want to delete blog titled ${blog.title}`)){
-      const _response = await blogService.deleteBlog(blog.id)
+      await blogService.deleteBlog(blog.id)
       setBlogs(blogs.filter(b => b.id !== blog.id))
     }
   }

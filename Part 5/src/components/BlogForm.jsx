@@ -15,7 +15,7 @@ const BlogForm = ({ setBlogs, setSucc }) => {
       'url' : url
     }
 
-    const _result = await blogService.create(newBlog)
+    await blogService.create(newBlog)
     setBlogs(b => b.concat(newBlog))
     setSucc('created blog successfully')
     setTimeout(() => {
