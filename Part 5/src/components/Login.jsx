@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import loginService from '../services/login'
 
 const LoginForm = ({ username, password, setUsername, setPassword, setUser, setErr, setSucc }) => {
