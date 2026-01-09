@@ -42,12 +42,12 @@ const Blog = ({ blogs, setBlogs, user, setUser, setSucc }) => {
 
   const details = (blog) => {
     return(
-      <>
+      <div className='blog-detail'>
         <div>{blog.url}</div>
         <div>likes {blog.likes}&nbsp;<button onClick={() => handleLike(blog.id)}>like</button></div>
         <div>{user.name} </div>
         <button onClick={() => handleRemove(blog)}>remove</button><br/>
-      </>
+      </div>
     )
   }
 
