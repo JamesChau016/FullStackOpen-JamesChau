@@ -27,6 +27,18 @@ const App = () => {
     }
   }, [])
 
+  const handleLike = async (id) => {
+    const blog = blogs.find(b => b.id===id)
+    const newLike = blog.likes +1
+    const newBlog = { ...blog, likes: newLike }
+    await blogService.change(id, newBlog)
+    setBlogs(blogs.map(b => b.id===id ? newBlog : b))
+    setSucc(`you liked a blog titled ${blog.title}`)
+    setTimeout(() => {
+      setSucc(null)
+    }, 5000)
+  }
+
 
   if (!user){
     return(
@@ -54,7 +66,8 @@ const App = () => {
           user={user}
           setUser={setUser}
           setErr={setErr}
-          setSucc={setSucc}/>
+          setSucc={setSucc}
+          handleLike={handleLike}/>
       </>
     )
   }
