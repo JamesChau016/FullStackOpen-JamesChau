@@ -5,67 +5,67 @@ import BlogForm from '../components/BlogForm'
 
 
 const blogs = [
-  {
-    'title': 'blog rendering test',
-    'author': 'Jammie',
-    'url': 'abc.com',
-    'likes': 7
-  },
+    {
+        'title': 'blog rendering test',
+        'author': 'Jammie',
+        'url': 'abc.com',
+        'likes': 7
+    },
 ]
 
 const user = {
-  'username': 'Jimmy',
-  'name': 'James'
+    'username': 'Jimmy',
+    'name': 'James'
 }
 
 test('renders content', () => {
 
-  render(<Blog blogs={blogs} user={user}/>)
+    render(<Blog blogs={blogs} user={user}/>)
 
-  const title = screen.getByText('blog rendering test', { exact: false })
-  expect(title).toBeDefined()
+    const title = screen.getByText('blog rendering test', { exact: false })
+    expect(title).toBeDefined()
 
-  const author = screen.queryByText('Jammie')
-  const url = screen.queryByText('url')
-  const likes = screen.queryByText('likes')
+    const author = screen.queryByText('Jammie')
+    const url = screen.queryByText('url')
+    const likes = screen.queryByText('likes')
 
-  expect(author).toBeNull()
-  expect(url).toBeNull()
-  expect(likes).toBeNull()
+    expect(author).toBeNull()
+    expect(url).toBeNull()
+    expect(likes).toBeNull()
 })
 
 test('view details button', async () => {
 
-  render(<Blog blogs={blogs} user={user}/>)
+    render(<Blog blogs={blogs} user={user}/>)
 
-  const mockUser = userEvent.setup()
-  const button = screen.getByText('view')
-  await mockUser.click(button)
+    const mockUser = userEvent.setup()
+    const button = screen.getByText('view')
+    await mockUser.click(button)
 
-  const url = screen.queryByText('url')
-  const likes = screen.queryByText('likes')
+    const url = screen.queryByText('url')
+    const likes = screen.queryByText('likes')
 
-  expect(url).toBeDefined()
-  expect(likes).toBeDefined()
+    expect(url).toBeDefined()
+    expect(likes).toBeDefined()
 })
 
 test('test like button', async () => {
-  const likeHandler = vi.fn()
-  render(<Blog blogs={blogs} user={user} handleLike={likeHandler}/>)
+    const likeHandler = vi.fn()
+    render(<Blog blogs={blogs} user={user} handleLike={likeHandler}/>)
 
-  const mockUser = userEvent.setup()
-  const button = screen.getByText('like')
-  await mockUser.click(button)
-  await mockUser.click(button)
+    const mockUser = userEvent.setup()
+    const button = screen.getByText('like')
+    await mockUser.click(button)
+    await mockUser.click(button)
 
-  expect(likeHandler.mock.calls).toHaveLength(2)
+    expect(likeHandler.mock.calls).toHaveLength(2)
 })
 
 test('blog form test', async () => {
-  const createBlog = vi.fn()
-  const mockUser = userEvent.setup()
+    const createBlog = vi.fn()
+    const mockUser = userEvent.setup()
 
-  render(<BlogForm handleCreate={createBlog}/>)
+    render(<BlogForm handleCreate={createBlog}/>)
 
     const titleInput = screen.getByLabelText('title:',{ exact: false })
     const authorInput = screen.getByLabelText('author:',{ exact: false })
