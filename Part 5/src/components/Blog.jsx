@@ -29,6 +29,15 @@ const Blog = ({ blogs, setBlogs, user, setUser, setSucc, handleLike }) => {
     }
   }
 
+  const handleCreate = async (newBlog) => {
+    await blogService.create(newBlog)
+    setBlogs(b => b.concat(newBlog))
+    setSucc('created blog successfully')
+    setTimeout(() => {
+      setSucc(null)
+    }, 5000)
+  }
+
   const details = (blog) => {
     return(
       <div className='blog-detail'>
@@ -44,8 +53,7 @@ const Blog = ({ blogs, setBlogs, user, setUser, setSucc, handleLike }) => {
     <>
       <p>{user.name} logged in &nbsp;<button onClick={handleLogOut}>log out</button></p>
       <Toggle show={'create new blog'} hide={'cancel'}>
-        <BlogForm setBlogs={setBlogs}
-          setSucc={setSucc}/>
+        <BlogForm handleCreate={handleCreate}/>
       </Toggle>
       <br/>
       {blogs.map((b) => (
