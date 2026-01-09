@@ -46,3 +46,15 @@ test('view details button', async () => {
   expect(url).toBeDefined()
   expect(likes).toBeDefined()
 })
+
+test('test like button', async () => {
+  const mockHandler = vi.fn()
+  render(<Blog blogs={blogs} user={user} handleLike={mockHandler}/>)
+
+  const mockUser = userEvent.setup()
+  const button = screen.getByText('like')
+  await mockUser.click(button)
+  await mockUser.click(button)
+
+  expect(mockHandler.mock.calls).toHaveLength(2)
+})
