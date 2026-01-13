@@ -30,8 +30,8 @@ const Blog = ({ blogs, setBlogs, user, setUser, setSucc, handleLike }) => {
     }
 
     const handleCreate = async (newBlog) => {
-        await blogService.create(newBlog)
-        setBlogs(b => b.concat(newBlog))
+        const result = await blogService.create(newBlog)
+        setBlogs(b => b.concat(result))
         setSucc('created blog successfully')
         setTimeout(() => {
             setSucc(null)
