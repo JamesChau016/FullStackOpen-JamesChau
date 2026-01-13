@@ -10,6 +10,14 @@ describe('Blog app', () => {
             "password": "admin"
         }
     })
+    await request.post('http://localhost:3003/api/users', {
+      data:{
+          "name": "user",
+          "username": "user",
+          "password": "user"
+      }
+  })
+
 
     await page.goto('http://localhost:5173')
   })
@@ -76,12 +84,29 @@ describe('Blog app', () => {
       await page.getByRole('button', {name: 'create'}).click()
 
       await page.getByRole('button', {name: 'view'}).click()
-      
+
       page.on('dialog', dialog => dialog.accept())
       await page.getByRole('button', {name: 'remove'}).click()
 
       
       await expect(page.getByText('test create blog')).not.toBeVisible()
+    })
+
+    test('delete button only show for the creator of that blog', async ({ page })=> {
+      await page.getByRole('button', {name: 'create new blog'}).click()
+      await page.getByLabel('title').fill('test create blog')
+      await page.getByLabel('author').fill('admin')
+      await page.getByLabel('url').fill('url.com')
+      await page.getByRole('button', {name: 'create'}).click()
+
+      await page.getByRole('button', {name: 'log out'}).click()
+      await page.getByLabel('username').fill('user')
+      await page.getByLabel('password').fill('user')
+      await page.getByRole('button', {name: 'login'}).click()
+
+      await expect(page.getByText('user logged in')).toBeVisible()
+      await page.getByRole('button', {name: 'view'}).click()
+      await expect(page.getByRole('button', {name: 'remove'})).not.toBeVisible()
     })
   })
 })
