@@ -31,7 +31,11 @@ const Blog = ({ blogs, setBlogs, user, setUser, setSucc, handleLike }) => {
 
     const handleCreate = async (newBlog) => {
         const result = await blogService.create(newBlog)
-        setBlogs(b => b.concat(result))
+        const blogWithUser = {
+            ...result,
+            user:user
+        }
+        setBlogs(b => b.concat(blogWithUser))
         setSucc('created blog successfully')
         setTimeout(() => {
             setSucc(null)
@@ -44,6 +48,7 @@ const Blog = ({ blogs, setBlogs, user, setUser, setSucc, handleLike }) => {
                 <div>{blog.url}</div>
                 <div>likes {blog.likes}&nbsp;<button onClick={() => handleLike(blog.id)}>like</button></div>
                 <div>{user.name} </div>
+                {console.log(user, blog)}
                 {user.username === blog.user.username && (<><button onClick={() => handleRemove(blog)}>remove</button><br/></>)}
             </div>
         )
