@@ -32,7 +32,8 @@ const App = () => {
         const newLike = blog.likes +1
         const newBlog = { ...blog, likes: newLike }
         await blogService.change(id, newBlog)
-        setBlogs(blogs.map(b => b.id===id ? newBlog : b))
+        const newBlogList = blogs.map(b => b.id===id ? newBlog : b)
+        setBlogs(newBlogList.sort((a,b) => b.likes - a.likes))
         setSucc(`you liked a blog titled ${blog.title}`)
         setTimeout(() => {
             setSucc(null)
