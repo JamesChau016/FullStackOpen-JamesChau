@@ -62,7 +62,7 @@ const Blog = ({ blogs, setBlogs, user, setUser, setSucc, handleLike }) => {
             </Toggle>
             <br/>
             {blogs.map((b) => (
-                <div style = {blogStyle} key={b.id}>
+                <div style = {blogStyle} key={b.id} data-testid="blog">
                     {b.title} {b.author}
                     <Toggle show={'view'} hide={'hide'}>
                         {details(b)}
