@@ -1,4 +1,5 @@
 import loginService from '../services/login'
+import blogService from '../services/blogs'
 
 const LoginForm = ({ username, password, setUsername, setPassword, setUser, setErr, setSucc }) => {
 
@@ -6,6 +7,7 @@ const LoginForm = ({ username, password, setUsername, setPassword, setUser, setE
         e.preventDefault()
         try{
             const user = await loginService.login({ username, password })
+            blogService.setToken(user.token)
             setUser(user)
             setSucc('logged in successful')
             setTimeout(() => {
@@ -16,7 +18,6 @@ const LoginForm = ({ username, password, setUsername, setPassword, setUser, setE
             window.localStorage.setItem(
                 'loggedInUser', JSON.stringify(user)
             )
-
         }
         catch (error){
             console.log(error)
