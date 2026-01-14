@@ -61,14 +61,16 @@ const Blog = ({ blogs, setBlogs, user, setUser, setSucc, handleLike }) => {
                 <BlogForm handleCreate={handleCreate}/>
             </Toggle>
             <br/>
-            {blogs.map((b) => (
-                <div style = {blogStyle} key={b.id} data-testid="blog">
-                    {b.title} {b.author}
-                    <Toggle show={'view'} hide={'hide'}>
-                        {details(b)}
-                    </Toggle>
-                </div>
-            ))}
+            <div data-testid="blog-container">
+                {blogs.map((b) => (
+                    <div style = {blogStyle} key={b.id} data-testid="blog">
+                        {b.title} {b.author}
+                        <Toggle show={'view'} hide={'hide'}>
+                            {details(b)}
+                        </Toggle>
+                    </div>
+                ))}
+            </div>
         </>
     )
 }
