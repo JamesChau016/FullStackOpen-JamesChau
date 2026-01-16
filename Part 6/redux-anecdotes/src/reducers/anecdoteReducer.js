@@ -26,7 +26,7 @@ const reducer = (state = initialState, action) => {
       const id = action.payload.id
       const anec = state.find(a => a.id === id)
       const newAnec = {...anec, votes: anec.votes+1}
-      return state.map(a => a.id===id ? newAnec : a)
+      return state.map(a => a.id === id ? newAnec : a)
     }
     default: 
       return state
