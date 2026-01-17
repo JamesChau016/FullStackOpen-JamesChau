@@ -8,7 +8,7 @@ const AnecdoteList = () => {
             return state.anecdotes.sort((a,b) => b.votes-a.votes)
         }
         else{
-            return state.anecdotes.filter(s => s.content.includes(state.filter))
+            return state.anecdotes.filter(s => s.content.includes(state.filter)).sort((a,b) => b.votes-a.votes)
         }
     })
 
