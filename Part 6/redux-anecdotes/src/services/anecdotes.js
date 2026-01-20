@@ -6,7 +6,7 @@ const getAll = async () => {
     const response = await fetch(baseUrl)
 
     if (!response.ok){
-        throw new Error('failed to fetch data')
+        throw new Error('Failed to fetch data')
     }
 
     return await response.json()
@@ -24,4 +24,22 @@ const create = async (content) => {
     return await response.json()
 }
 
-export default { getAll, create }
+const voteA = async (id) => {
+    const url = `${baseUrl}/${id}`
+    const result = await fetch(url)
+    const anecdote = await result.json()
+    const newAnec = {...anecdote, votes: anecdote.votes+1}
+    const response = await fetch(url, {
+        method: 'put',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(newAnec)
+    })
+
+    if (!response.ok){
+        throw new Error('Failed to vote')
+    }
+
+    return await response.json()
+}
+
+export default { getAll, create, voteA }
