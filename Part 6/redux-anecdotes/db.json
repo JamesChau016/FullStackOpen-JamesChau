@@ -33,7 +33,12 @@
     {
       "id": "cbcb",
       "content": "test anecdote create",
-      "votes": 1
+      "votes": 3
+    },
+    {
+      "id": "ae44",
+      "content": "asda",
+      "votes": 0
     }
   ]
 }
