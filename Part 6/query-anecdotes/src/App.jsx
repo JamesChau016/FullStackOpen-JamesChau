@@ -1,7 +1,11 @@
+import { useContext } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { getAll, createNew, voteAnec } from './services/anecdote'
 import AnecdoteForm from './components/AnecdoteForm'
 import Notification from './components/Notification'
+import NotiContext from './NotiContext'
+
+
 
 const App = () => {
   const queryClient = useQueryClient()
@@ -11,6 +15,7 @@ const App = () => {
     retry: 1,
     refetchOnWindowFocus: false
   })
+  
   const newAnecMutation = useMutation({
     mutationFn: createNew,
     onSuccess: (newAnec) => {
@@ -27,6 +32,9 @@ const App = () => {
     }
   })
 
+  const { noti, notiDispatch } = useContext(NotiContext)
+  
+
   if (result.isLoading){
     return <div>Loading data...</div>
   }
@@ -39,10 +47,14 @@ const App = () => {
   const handleVote = (anecdote) => {
     const newAnec = {...anecdote, votes: anecdote.votes+1}
     voteMutation.mutate(newAnec)
+    notiDispatch({
+      type: 'SET_NOTI',
+      payload: `You voted for "${anecdote.content}"`
+    })
   }
 
   return (
-    <div>
+    <NotiContext.Provider value={{noti, notiDispatch}}>
       <h3>Anecdote app</h3>
 
       <Notification />
@@ -57,7 +69,7 @@ const App = () => {
           </div>
         </div>
       ))}
-    </div>
+    </NotiContext.Provider>
   )
 }
 

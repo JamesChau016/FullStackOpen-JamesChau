@@ -1,10 +1,21 @@
+import { useContext } from 'react'
+import NotiContext from '../NotiContext'
+
 const AnecdoteForm = ({newAnecMutation}) => {
+  const { notiDispatch } = useContext(NotiContext)
+
   const onCreate = (event) => {
     event.preventDefault()
     const content = event.target.anecdote.value
     event.target.anecdote.value = ''
     newAnecMutation.mutate({content, votes: 0})
+    notiDispatch({
+      type: 'SET_NOTI',
+      payload: `You created "${content}"`
+    })
   }
+
+  
 
   return (
     <div>
