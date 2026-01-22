@@ -15,12 +15,18 @@ const App = () => {
     retry: 1,
     refetchOnWindowFocus: false
   })
-  
+
   const newAnecMutation = useMutation({
     mutationFn: createNew,
     onSuccess: (newAnec) => {
       const anecdoteList = queryClient.getQueryData(['anecdotes'])
       queryClient.setQueryData(['anecdotes'], anecdoteList.concat(newAnec))
+    },
+    onError: () => {
+      notiDispatch({
+        type: 'SET_NOTI',
+        payload: `too short anecdote, must have length 5 or more`
+      })
     }
   })
 
