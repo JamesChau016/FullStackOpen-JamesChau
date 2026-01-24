@@ -1,7 +1,9 @@
 import { 
   Routes,
   Route,
-  useNavigate
+  useNavigate,
+  useMatch,
+  useParams
 } from 'react-router-dom'
 import { useState } from 'react'
 import { Anecdote, AnecdoteList } from './components/Anecdotes'
@@ -10,6 +12,7 @@ import { Menu, About, Footer } from './components/misc'
 
 const App = () => {
   const navigate = useNavigate()
+  const match = useMatch('/anecdotes/:id')
   const [anecdotes, setAnecdotes] = useState([
     {
       content: 'If it hurts, do it more often',
@@ -29,6 +32,7 @@ const App = () => {
 
   const [notification, setNotification] = useState(null)
   
+  const anecdote = match ? anecdotes.find(a => a.id === Number(match.params.id)) : null
     
   const vote = (id) => {
     const anecdote = anecdoteById(id)
@@ -56,7 +60,7 @@ const App = () => {
                       navigate={navigate} 
                       setNotification={setNotification}/>}/>
         <Route path='/about' element={<About />}/>
-        <Route path='/anecdotes/:id' element={<Anecdote anecdotes={anecdotes}/>}/>
+        <Route path='/anecdotes/:id' element={<Anecdote anecdote={anecdote}/>}/>
       </Routes>
       <br/>
       <Footer />

@@ -1,4 +1,4 @@
-import { Link, useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 export const AnecdoteList = ({ anecdotes }) => {
     return(
@@ -14,10 +14,7 @@ export const AnecdoteList = ({ anecdotes }) => {
     </div>
 )}
 
-export const Anecdote = ({ anecdotes }) => {
-    const id = useParams().id
-    const anecdote= anecdotes.find(a => a.id === Number(id))
-    
+export const Anecdote = ({ anecdote }) => {
     return(
       <div>
         <h2>{anecdote.content}</h2>
