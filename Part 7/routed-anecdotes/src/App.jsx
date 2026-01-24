@@ -27,6 +27,7 @@ const App = () => {
     }
   ])
 
+  const [notification, setNotification] = useState(null)
   
     
   const vote = (id) => {
@@ -40,13 +41,20 @@ const App = () => {
     setAnecdotes(anecdotes.map(a => a.id === id ? voted : a))
   }
 
+  const Notification = () => (<div><strong>{notification}</strong></div>)
+
   return (
     <div>
       <h1>Software anecdotes</h1>
       <Menu />
+      {notification&&<Notification/>}
       <Routes>
         <Route path='/' element={<AnecdoteList anecdotes={anecdotes} />}/>
-        <Route path='/create' element={<CreateNew anecdotes={anecdotes} setAnecdotes={setAnecdotes} navigate={navigate}/>}/>
+        <Route path='/create' element={
+          <CreateNew anecdotes={anecdotes} 
+                      setAnecdotes={setAnecdotes} 
+                      navigate={navigate} 
+                      setNotification={setNotification}/>}/>
         <Route path='/about' element={<About />}/>
         <Route path='/anecdotes/:id' element={<Anecdote anecdotes={anecdotes}/>}/>
       </Routes>

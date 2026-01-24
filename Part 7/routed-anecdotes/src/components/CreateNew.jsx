@@ -4,7 +4,7 @@ const CreateNew = (props) => {
   const [content, setContent] = useState('')
   const [author, setAuthor] = useState('')
   const [info, setInfo] = useState('')
-  const [notification, setNotification] = useState('')
+  
 
   const addNew = (anecdote) => {
     anecdote.id = Math.round(Math.random() * 10000)
@@ -21,6 +21,10 @@ const CreateNew = (props) => {
       votes: 0
     })
     props.navigate('/')
+    props.setNotification(`you created "${content}"`)
+    setTimeout(() => {
+        props.setNotifcation(null)
+    },5000)
 }
     
 
