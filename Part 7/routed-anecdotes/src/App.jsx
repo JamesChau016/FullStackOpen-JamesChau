@@ -2,8 +2,7 @@ import {
   Routes,
   Route,
   useNavigate,
-  useMatch,
-  useParams
+  useMatch
 } from 'react-router-dom'
 import { useState } from 'react'
 import { Anecdote, AnecdoteList } from './components/Anecdotes'

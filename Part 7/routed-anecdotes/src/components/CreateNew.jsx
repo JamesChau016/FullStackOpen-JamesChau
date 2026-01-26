@@ -1,4 +1,4 @@
-import { useField } from './Hooks'
+import { useField } from '../hooks/index'
 
 const CreateNew = (props) => {
   const content = useField('content')
