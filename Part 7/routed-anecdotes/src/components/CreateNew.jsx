@@ -5,7 +5,6 @@ const CreateNew = (props) => {
   const author = useField('author')
   const info = useField('info')
 
-  
 
   const addNew = (anecdote) => {
     anecdote.id = Math.round(Math.random() * 10000)
@@ -26,7 +25,14 @@ const CreateNew = (props) => {
     setTimeout(() => {
         props.setNotification(null)
     },5000)
-}
+  }
+
+  const handleReset = (e) => {
+    e.preventDefault()
+    content.setValue('')
+    author.setValue('')
+    info.setValue('')
+  }
     
 
     return (
@@ -45,7 +51,8 @@ const CreateNew = (props) => {
                 url for more info
                 <input {...info} />
             </div>
-            <button>create</button>
+            <button>create</button>&nbsp;
+            <button onClick={handleReset}>reset</button>
             </form>
         </div>
     )
