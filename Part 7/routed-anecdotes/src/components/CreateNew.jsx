@@ -5,12 +5,10 @@ const CreateNew = (props) => {
   const author = useField('author')
   const info = useField('info')
 
-
   const addNew = (anecdote) => {
     anecdote.id = Math.round(Math.random() * 10000)
     props.setAnecdotes(props.anecdotes.concat(anecdote))
   }
-
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -29,9 +27,9 @@ const CreateNew = (props) => {
 
   const handleReset = (e) => {
     e.preventDefault()
-    content.setValue('')
-    author.setValue('')
-    info.setValue('')
+    content.reset()
+    author.reset()
+    info.reset()
   }
     
 
@@ -41,15 +39,15 @@ const CreateNew = (props) => {
             <form onSubmit={handleSubmit}>
             <div>
                 content
-                <input {...content} />
+                <input {...content.input} />
             </div>
             <div>
                 author
-                <input {...author} />
+                <input {...author.input} />
             </div>
             <div>
                 url for more info
-                <input {...info} />
+                <input {...info.input} />
             </div>
             <button>create</button>&nbsp;
             <button onClick={handleReset}>reset</button>
